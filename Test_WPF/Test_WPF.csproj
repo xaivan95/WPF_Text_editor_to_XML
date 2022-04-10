@@ -112,5 +112,23 @@
   <ItemGroup>
     <Resource Include="Resources\Image\cut.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\bold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\italic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\underline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\strikeout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\subscript.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image\superscript.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

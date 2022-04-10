@@ -42,5 +42,47 @@ namespace Test_WPF
 
             }
         }
+
+        private void txtRichText_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            object temp = txtRichText.Selection.GetPropertyValue(Inline.FontWeightProperty);
+            btn_Bold.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontWeights.Bold));
+            temp = txtRichText.Selection.GetPropertyValue(Inline.FontStyleProperty);
+            btn_Italic.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
+            temp = txtRichText.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
+            btn_underline.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
+            //ToDO обновление состояния следующих кнопок
+            temp = txtRichText.Selection.GetPropertyValue(Inline.FontFamilyProperty);
+            cmbFontFamily.SelectedItem = temp;
+            temp = txtRichText.Selection.GetPropertyValue(Inline.FontSizeProperty);
+            cmbFontSize.Text = temp.ToString();
+        }
+
+        private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbFontFamily.SelectedItem != null)
+
+                txtRichText.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
+        }
+
+        private void cmbFontSize_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtRichText.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.Text);
+        }
+
+        private void btn_Paste_Click(object sender, RoutedEventArgs e)
+        {
+            txtRichText.Paste();
+        }
+
+        private void btn_Cyte_Click(object sender, RoutedEventArgs e)
+        {
+            txtRichText.Copy();
+        }
+
+        private void btn_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            txtRichText.Cut();
+        }
     }
 }
