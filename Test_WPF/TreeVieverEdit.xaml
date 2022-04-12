@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Test_WPF.TreeVieverEdit"
+             x:Name="TreeVieverEdi"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Test_WPF" >
+    <!-- получает коллекцию элементов -->
+    <TreeView x:Name="treeView" ItemsSource="{Binding}"          
+              KeyDown="treeView_KeyDown"
+              SelectedItemChanged="treeView_SelectedItemChanged" SelectedValuePath="Count">
+        <TreeView.Resources>
+            <HierarchicalDataTemplate DataType="{x:Type local:TreeViewParentItem}" ItemsSource="{Binding TreeViewChildrenItems}">
+                <Grid>
+                    <!-- Нормальное состояние заголовка -->
+                    <TextBlock x:Name="textBlockHeader" Text="{Binding Name}" Margin="3,0" MouseLeftButtonDown="textBlockHeader_MouseLeftButtonDown"/>
+                    <!-- Режим редактирования -->
+                    <TextBox x:Name="editableTextBoxHeader" Visibility="Hidden" MinWidth="100"
+                             Text="{Binding Name, UpdateSourceTrigger=LostFocus}"
+                             LostFocus="editableTextBoxHeader_LostFocus"
+                             IsVisibleChanged="editableTextBoxHeader_IsVisibleChanged"
+                             KeyDown="editableTextBoxHeader_KeyDown"/>
+                </Grid>
+                <!-- С помощью триггеров мы переключаемся между тремя состояниями заголовка в зависимости от его сфокусированного свойства и свойства уровня управления "IsInEditMode". -->
+                <HierarchicalDataTemplate.Triggers>
+                    <MultiDataTrigger>
+                        <!-- Выбран, редактирование обычно активно - отображается текстовое поле -->
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}" Value="True"/>
+                            <Condition Binding="{Binding IsInEditMode, ElementName=TreeVieverEdi}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <Setter TargetName="editableTextBoxHeader" Property="Visibility" Value="Visible" />
+                    </MultiDataTrigger>
+                </HierarchicalDataTemplate.Triggers>
+            </HierarchicalDataTemplate>
+        </TreeView.Resources>
+    </TreeView>
+</UserControl>
